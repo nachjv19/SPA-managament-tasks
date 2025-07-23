@@ -5,10 +5,11 @@ const routes = {
   '#/login': 'views/login.html',
   '#/register': 'views/register.html',
   '#/dashboard': 'views/dashboard.html',
-  '#/tasks': 'views/tasks.html',
   '#/admin-users': 'views/admin-users.html',
-  '#/trash' : 'views/trash.html',
-  '#/trash-users': 'views/trash-users.html'
+  '#/trash-users': 'views/trash-users.html',
+  '#/purchases': 'views/purchases.html',
+  '#/admin-products': 'views/admin-products.html',
+  '#/stock': 'views/stock.html'
 };
 
 export async function loadView() {
@@ -47,30 +48,34 @@ export async function loadView() {
       import('./auth.js').then(m => m.initRegister());
       import('../components/navbar.js').then(m => m.loadNavbar());
     }
-    if (path === '#/dashboard') {
-      import('../components/navbar.js').then(m => m.loadNavbar());
+     if (path === '#/dashboard') {
+       import('./dashboard.js').then(m => m.initDashboard());
+       import('../components/navbar.js').then(m => m.loadNavbar());
     }
-    if (path === '#/tasks') {
-      import('./api.js').then(m => m.initTasks());
-      import('../components/navbar.js').then(m => m.loadNavbar());
-    }
+
     if (path === '#/admin-users') {
       import('./admin.js').then(m => m.initAdminUsers());
       import('../components/navbar.js').then(m => m.loadNavbar());
-    }
-
-    if (path === '#/trash') {
-        import('./trash.js').then(m => m.loadTrash());
-        import('../components/navbar.js').then(m => m.loadNavbar());
-    }
-    if (path === '#/trash-tasks') {
-      import('./trash-tasks.js').then(m => m.initTrashTasks());
-      import('../components/navbar.js').then(m => m.loadNavbar());
-    }
+    } 
 
     if (path === '#/trash-users'){
         import ('./trash.users.js').then(m => m.loadTrashUsers());
         import('../components/navbar.js').then(m => m.loadNavbar());
+    }
+
+    if (path === '#/purchases') {
+        import('./purchases.js').then(m => m.initPurchases());
+        import('../components/navbar.js').then(m => m.loadNavbar());
+    }
+    if (path === '#/stock') {
+      import('./stock.js').then(m => m.initStock());
+      import('../components/navbar.js').then(m => m.loadNavbar());
+    }
+
+
+    if(path === '#/admin-products'){
+      import('./admin-products.js').then(m => m.initAdminProducts());
+      import('../components/navbar.js').then(m => m.loadNavbar());
     }
 
     if (protectRoutes.includes(path)) {

@@ -1,34 +1,34 @@
-// 📁 components/navbar.js
-import { getUsername, getUserRole, clearSession } from '../js/session.js';
+// 📁 src/components/navbar.js
+import { clearSession, getUserRole, getUsername } from '../js/session.js';
 
 export function loadNavbar() {
-  const navbar = document.getElementById('navbar');
-  if (!navbar) return;
-
-  const user = getUsername();
   const role = getUserRole();
+  const username = getUsername();
+  const container = document.querySelector('#navbar');
+  if (!container) return;
 
-  // Mostrar navbar solo si estamos en vistas protegidas y hay sesión
-  if (!user || !role) {
-    navbar.innerHTML = '';
-    return;
-  }
-
-  navbar.innerHTML = `
-    <nav class="flex justify-between items-center bg-gray-200 p-4 rounded mb-4">
-      <div class="space-x-4">
-        <span class="font-semibold text-gray-700">👋 Hola, ${user}</span>
-        <a href="#/dashboard" class="text-blue-600 hover:underline">Inicio</a>
-        <a href="#/tasks" class="text-blue-600 hover:underline">Tareas</a>
-        ${role === 'admin' ? '<a href="#/admin-users" class="text-blue-600 hover:underline">Admin Usuarios</a>' : ''}
-        ${role === 'admin' ? '<a href="#/trash" class="text-blue-600 hover:underline">🗑 Papelera</a>' : ''}
-        ${role === 'admin' ? '<a href="#/trash-users" class="text-blue-600 hover:underline">Usuarios eliminados</a>' : ''}
+  container.innerHTML = `
+    <nav class="bg-gray-800 text-white px-6 py-4 flex flex-col sm:flex-row sm:justify-between items-center rounded shadow-md">
+      <div class="flex items-center space-x-4 mb-2 sm:mb-0">
+        <span class="text-xl font-bold text-yellow-400">VibrantApp</span>
+        <span class="text-sm text-gray-200 hidden sm:inline">Hola, <strong>${username}</strong></span>
       </div>
-      <button id="logout" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700">Cerrar sesión</button>
+
+      <div class="flex flex-wrap justify-center sm:justify-end gap-2">
+        <a href="#/dashboard" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition">Inicio</a>
+        <a href="#/stock" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded transition">Gestionar Eventos</a>
+        <a href="#/purchases" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded transition">Gestionar usuarios</a>
+        ${
+          role === 'admin'
+            ? `<a href="#/admin-products" class="bg-yellow-400 text-black hover:bg-yellow-500 px-3 py-1 rounded transition">Gestionar Hosters</a>`
+            : ''
+        }
+        <button id="logout" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition">Cerrar sesión</button>
+      </div>
     </nav>
   `;
 
-  document.getElementById('logout')?.addEventListener('click', () => {
+  document.querySelector('#logout')?.addEventListener('click', () => {
     clearSession();
     location.hash = '#/login';
   });
