@@ -8,7 +8,7 @@
       "phone": "3042223331",
       "username": "Polanco_Vasquez",
       "password": "Polanco19_",
-      "role": "admin",
+      "role": "user",
       "is_active": true,
       "deleted_at": null
     },
